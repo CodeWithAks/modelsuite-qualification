@@ -13,6 +13,7 @@ const labelCls = 'text-[11px] font-semibold uppercase tracking-[0.6px] text-text
 const LoginPage = () => {
   const [email, setEmail]       = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword,setShowPassword] = useState(false);
   const { login }   = useAuth();
   const navigate    = useNavigate();
 
@@ -49,9 +50,14 @@ const LoginPage = () => {
 
           <div className="flex flex-col gap-2 group">
             <label className={labelCls} htmlFor="password">Password</label>
-            <input id="password" type="password" placeholder="••••••••"
+            <input id="password" type={showPassword ? "text" : "password"} placeholder="••••••••"
               value={password} onChange={(e) => setPassword(e.target.value)} required className={inputCls} />
-          </div>
+
+              <button type="button" onClick={()=>setShowPassword(!showPassword) } 
+              className="absolute right-4 top-[57%] -translate-y-1/2 text-sm text-primary hover:text-primary/80 transition-colors duration-200">
+                {showPassword ? "Hide" : "Show"}
+              </button>
+          </div>  
 
           <button type="submit"
             className="mt-1.5 w-full py-3.5 rounded-[10px] text-[15px] font-semibold text-white cursor-pointer btn-gradient border-none hover:scale-[1.02] active:scale-[0.98] transition-transform duration-200">

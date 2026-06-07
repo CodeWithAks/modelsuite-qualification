@@ -14,6 +14,7 @@ const RegisterPage = () => {
   const [name, setName]       = useState('');
   const [email, setEmail]     = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword,setShowPassword] = useState(false);
   const [role, setRole]       = useState('Talent');
   const { login }  = useAuth();
   const navigate   = useNavigate();
@@ -42,25 +43,30 @@ const RegisterPage = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4 relative z-10 animate-fade-slide" style={{ animationDelay: '0.2s', animationFillMode: 'both' }}>
-          <div className="flex flex-col gap-2 group">
+          <div className="flex flex-col gap-2 group relative">
             <label className={labelCls} htmlFor="name">Full Name</label>
             <input id="name" type="text" placeholder="Jane Doe"
               value={name} onChange={(e) => setName(e.target.value)} required className={inputCls} />
           </div>
 
-          <div className="flex flex-col gap-2 group">
+          <div className="flex flex-col gap-2 group relative">
             <label className={labelCls} htmlFor="reg-email">Email address</label>
             <input id="reg-email" type="email" placeholder="you@company.com"
               value={email} onChange={(e) => setEmail(e.target.value)} required className={inputCls} />
           </div>
 
-          <div className="flex flex-col gap-2 group">
+          <div className="flex flex-col gap-2 group relative"> 
             <label className={labelCls} htmlFor="reg-password">Password</label>
-            <input id="reg-password" type="password" placeholder="••••••••"
+            <input id="reg-password" type={showPassword ? "text" : "password"} placeholder="••••••••"
               value={password} onChange={(e) => setPassword(e.target.value)} required className={inputCls} />
+
+              <button type="button" onClick={()=> setShowPassword(!showPassword)}
+                className="absolute right-4 top-[57%] -translate-y-1/2 text-sm text-primary">
+                {showPassword ? "Hide" : "Show"}
+              </button>
           </div>
 
-          <div className="flex flex-col gap-2 group">
+          <div className="flex flex-col gap-2 group relative">
             <label className={labelCls} htmlFor="role">Role</label>
             <select id="role" value={role} onChange={(e) => setRole(e.target.value)}
               className={`${inputCls} custom-select cursor-pointer`}>
