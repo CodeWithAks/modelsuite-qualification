@@ -6,6 +6,8 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import SubmissionsPage from './pages/admin/SubmissionsPage';
 import TalentDashboard from './pages/talent/TalentDashboard';
 import NotFoundPage from './pages/NotFoundPage';
+import TalentsPage from './pages/admin/TalentsPage';
+import MyTasksPage from './pages/talent/MyTasksPage';
 // "Unauthorized" message — confusing UX for the user
 const PrivateRoute = ({ children, role }) => {
   const { user } = useAuth();
@@ -30,7 +32,7 @@ function App() {
               </PrivateRoute>
             }
           />
-          
+
           <Route
             path="/admin/tasks"
             element={
@@ -48,6 +50,14 @@ function App() {
             }
           />
           <Route
+            path="/talent/tasks"
+            element={
+              <PrivateRoute role="Talent">
+                <MyTasksPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
             path="/admin/submissions"
             element={
               <PrivateRoute role="Admin">
@@ -55,7 +65,15 @@ function App() {
               </PrivateRoute>
             }
           />
-          
+          <Route
+            path="/admin/talents"
+            element={
+              <PrivateRoute role="Admin">
+                <TalentsPage />
+              </PrivateRoute>
+            }
+          />
+
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>

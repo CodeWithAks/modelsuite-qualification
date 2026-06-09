@@ -1,5 +1,6 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import {NavLink} from "react-router-dom";
 
 /* ── Clean SVG line-art icons ── */
 const IconDashboard = () => (
@@ -54,14 +55,11 @@ const TalentSidebar = () => {
         </p>
 
         {navItems.map(({ label, path, Icon }) => {
-          const isActive = location.pathname === path;
           return (
-            <button key={path}
-              onClick={() => navigate(path)}
-              className={`nav-item ${isActive ? 'nav-active' : ''}`}>
+            <NavLink key={path} to={path} className={({isActive}) => `nav-item ${isActive ? `nav-active` : ``}`} >
               <Icon />
               <span>{label}</span>
-            </button>
+            </NavLink>
           );
         })}
       </nav>
