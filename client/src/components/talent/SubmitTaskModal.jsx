@@ -2,17 +2,17 @@
 import { submitTask } from '../../api/submissions';
 
 const SubmitTaskModal = ({ task, onClose, onSubmitted }) => {
-  const [file, setFile]   = useState(null);
+  const [files, setFiles] = useState([]);
   const [notes, setNotes] = useState('');
 
   const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
+    setFiles(Array.from(e.target.files));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    if (file) formData.append('file', file);
+    files.forEach((file) => formData.append('files', file));
     formData.append('notes', notes);
     try {
       await submitTask(task._id, formData);
@@ -52,17 +52,23 @@ const SubmitTaskModal = ({ task, onClose, onSubmitted }) => {
             <label className="text-[11px] font-semibold uppercase tracking-[0.5px] text-text-muted">
               Upload File
             </label>
-            
-            <input id="sub-file" type="file" onChange={handleFileChange} className="file-input-hidden" />
+
+            <input id="sub-file" type="file" multiple onChange={handleFileChange} className="file-input-hidden" />
             <label htmlFor="sub-file"
               className="flex flex-col items-center justify-center gap-2 py-7 px-4 bg-bg-input border-2 border-dashed border-border rounded-lg cursor-pointer hover:border-primary hover:bg-primary/5 transition-all text-center">
-              {file ? (
-                <span className="text-[13px] text-primary font-medium break-all">📎 {file.name}</span>
+              {files.length > 0 ? (
+                <span className="text-[13px] text-primary font-medium break-all">
+                  {files.map(file => (
+                    <p key={file.name}>
+                      📎 {file.name}
+                    </p>
+                  ))}
+                </span>
               ) : (
                 <>
                   <span className="text-xl">⬆</span>
                   <span className="text-[13px] text-text-muted">Click to choose a file</span>
-                  
+
                 </>
               )}
             </label>
@@ -76,7 +82,7 @@ const SubmitTaskModal = ({ task, onClose, onSubmitted }) => {
               className="w-full bg-bg-input border border-border rounded-lg px-3.5 py-2.5 text-sm text-text-primary outline-none placeholder:text-[#4e4a6e] focus:border-primary focus:ring-[3px] focus:ring-primary/15 transition-all font-sans resize-y" />
           </div>
 
-          
+
           <div className="flex justify-end gap-2.5 pt-1 border-t border-border mt-1">
             <button type="button" onClick={onClose}
               className="px-5 py-2.5 bg-bg-input text-text-muted border border-border rounded-lg text-sm font-medium cursor-pointer hover:bg-bg-hover hover:text-text-primary transition-all font-sans">
