@@ -1,4 +1,4 @@
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import {NavLink} from "react-router-dom";
 
@@ -34,7 +34,6 @@ const navItems = [
 const TalentSidebar = () => {
   const { user, logout } = useAuth();
   const navigate  = useNavigate();
-  const location  = useLocation();
 
   return (
     <aside className="fixed inset-y-0 left-0 w-[220px] flex flex-col z-50"
