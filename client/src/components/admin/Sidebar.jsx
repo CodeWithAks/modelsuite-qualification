@@ -1,55 +1,55 @@
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import {NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 /* ── Clean SVG line-art icons (no emojis, no AI icons) ── */
 const IconDashboard = () => (
   <svg className="nav-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-    <rect x="2" y="2" width="7" height="7" rx="1.5"/>
-    <rect x="11" y="2" width="7" height="7" rx="1.5"/>
-    <rect x="2" y="11" width="7" height="7" rx="1.5"/>
-    <rect x="11" y="11" width="7" height="7" rx="1.5"/>
+    <rect x="2" y="2" width="7" height="7" rx="1.5" />
+    <rect x="11" y="2" width="7" height="7" rx="1.5" />
+    <rect x="2" y="11" width="7" height="7" rx="1.5" />
+    <rect x="11" y="11" width="7" height="7" rx="1.5" />
   </svg>
 );
 
 const IconTasks = () => (
   <svg className="nav-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M7 10l2 2 4-4"/>
-    <rect x="3" y="3" width="14" height="14" rx="2"/>
+    <path d="M7 10l2 2 4-4" />
+    <rect x="3" y="3" width="14" height="14" rx="2" />
   </svg>
 );
 
 const IconSubmissions = () => (
   <svg className="nav-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M14 2H6a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2z"/>
-    <path d="M8 10h4M8 14h2M8 6h4"/>
+    <path d="M14 2H6a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2z" />
+    <path d="M8 10h4M8 14h2M8 6h4" />
   </svg>
 );
 
 const IconTalents = () => (
   <svg className="nav-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M13 7a3 3 0 11-6 0 3 3 0 016 0z"/>
-    <path d="M4 17a6 6 0 0112 0"/>
+    <path d="M13 7a3 3 0 11-6 0 3 3 0 016 0z" />
+    <path d="M4 17a6 6 0 0112 0" />
   </svg>
 );
 
 const IconLogout = () => (
   <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M13 10H3M13 10l-3-3M13 10l-3 3"/>
-    <path d="M7 4H4a1 1 0 00-1 1v10a1 1 0 001 1h3"/>
+    <path d="M13 10H3M13 10l-3-3M13 10l-3 3" />
+    <path d="M7 4H4a1 1 0 00-1 1v10a1 1 0 001 1h3" />
   </svg>
 );
 
 const navItems = [
-  { label: 'Dashboard',   path: '/admin/dashboard',   Icon: IconDashboard   },
-  { label: 'Tasks',       path: '/admin/tasks',       Icon: IconTasks       },
+  { label: 'Dashboard', path: '/admin/dashboard', Icon: IconDashboard },
+  { label: 'Tasks', path: '/admin/tasks', Icon: IconTasks },
   { label: 'Submissions', path: '/admin/submissions', Icon: IconSubmissions },
-  { label: 'Talents',     path: '/admin/talents',     Icon: IconTalents     },
+  { label: 'Talents', path: '/admin/talents', Icon: IconTalents },
 ];
 
 const Sidebar = () => {
   const { user, logout } = useAuth();
-  const navigate  = useNavigate();
+  const navigate = useNavigate();
 
   return (
     <aside className="fixed inset-y-0 left-0 w-[240px] flex flex-col z-50"
@@ -71,7 +71,7 @@ const Sidebar = () => {
 
         {navItems.map(({ label, path, Icon }) => {
           return (
-            <NavLink key={path} to={path} className={({isActive}) => `nav-item ${isActive ? `nav-active` : ``}`} >
+            <NavLink key={path} to={path} className={({ isActive }) => `nav-item ${isActive ? `nav-active` : ``}`} >
               <Icon />
               <span>{label}</span>
             </NavLink>
@@ -97,7 +97,10 @@ const Sidebar = () => {
           </div>
 
           <button
-            onClick={() => { logout(); navigate('/login'); }}
+            onClick={async () => {
+              await logout();
+              navigate('/login');
+            }}
             title="Sign out"
             className="logout-btn">
             <IconLogout />

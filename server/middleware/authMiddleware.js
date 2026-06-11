@@ -1,11 +1,21 @@
 ﻿const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const BlackListedToken = require('../models/BlacklistToken');
 const protect = async (req, res, next) => {
   let token;
 
   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
     try {
       token = req.headers.authorization.split(' ')[1];
+
+      const blackListed = await BlackListedToken.findOne({ token });
+
+      if (blackListed) {
+        return res.status(401).json({
+          message: 'Token invalidated'
+        });
+      }
+
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       req.user = await User.findById(decoded.id).select('-password');
       next();
